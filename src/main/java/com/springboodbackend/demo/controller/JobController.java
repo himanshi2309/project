@@ -25,6 +25,12 @@ public class JobController {
         return jobService.getAllJobs();
     }
 
+    @GetMapping("/jobs/titles")
+    public ResponseEntity<List<String>> getAllJobTitles() {
+        List<String> jobTitles = jobService.getAllJobTitles();
+        return ResponseEntity.ok(jobTitles);
+    }
+
     @PostMapping("/jobs")
     public Job createJob(@RequestBody Job job) {
         return jobService.createJob(job);

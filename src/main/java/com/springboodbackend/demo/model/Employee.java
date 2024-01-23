@@ -22,10 +22,24 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "job_id")
     private Job job;
+    @Transient
+    private String title;
+
+
+
 
 
     public Employee() {
 
+    }
+
+    public String getTitle() {
+        return job != null ? job.getTitle() : null;
+
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Employee(String firstName, String lastName, String emailId) {

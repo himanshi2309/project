@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class JobService {
@@ -48,5 +49,11 @@ public class JobService {
                 .orElseThrow(() -> new ResourceNotFoundException("Job not exist with id :" + id));
 
         jobRepository.delete(job);
+    }
+    public  List<String> getAllJobTitles() {
+        return jobRepository.findAll()
+                .stream()
+                .map(Job::getTitle)
+                .collect(Collectors.toList());
     }
 }

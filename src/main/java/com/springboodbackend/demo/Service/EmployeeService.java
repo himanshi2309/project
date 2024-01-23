@@ -23,10 +23,13 @@ public class EmployeeService {
     }
 
     public Employee createEmployee(Employee employee) {
-        long jobId = employee.getJob().getJobId();
-        Job job = jobRepository.findById(jobId)
-                .orElseThrow(() -> new ResourceNotFoundException("Job not exist with id :" + jobId));
+        String jobTitle = employee.getTitle();
 
+        // Fetch the job details based on the provided job title
+        Job job = jobRepository.findByTitle(jobTitle)
+                .orElseThrow(() -> new ResourceNotFoundException("Job not exist with title: " + jobTitle));
+
+        // Set the job for the employee
         employee.setJob(job);
 
         return employeeRepository.save(employee);
