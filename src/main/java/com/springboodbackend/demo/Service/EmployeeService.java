@@ -47,10 +47,13 @@ public class EmployeeService {
         employee.setFirstName(employeeDetails.getFirstName());
         employee.setLastName(employeeDetails.getLastName());
         employee.setEmailId(employeeDetails.getEmailId());
-        if (employeeDetails.getJob() != null) {
-            long newJobId = employeeDetails.getJob().getJobId();
-            Job newJob = jobRepository.findById(newJobId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Job not exist with id :" + newJobId));
+        // Check if a new job title is provided in the update request
+        if (employeeDetails.getTitle() != null) {
+            String newJobTitle = employeeDetails.getTitle();
+
+            // Fetch the job details based on the provided job title
+            Job newJob = jobRepository.findByTitle(newJobTitle)
+                    .orElseThrow(() -> new ResourceNotFoundException("Job not exist with title: " + newJobTitle));
 
             employee.setJob(newJob);
         }
